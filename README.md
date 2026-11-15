@@ -1,0 +1,2 @@
+# kozahan-antika
+C:\Projeler
