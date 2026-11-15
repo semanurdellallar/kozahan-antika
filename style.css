@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f7f3ed;
+}
+
+.site-footer {
+    background-color: #3b2314;
+    color: #f4eee1;
+    text-align: center;
+    padding: 30px 20px;
+    position: fixed; /* Sayfanın en dibine sabitler */
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    border-top: 4px solid #c89d55;
+    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
+}
+
+.footer-content p {
+    font-size: 15px;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
+}
+
+.footer-content p:last-child {
+    color: #dfb16b;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 0;
+}
