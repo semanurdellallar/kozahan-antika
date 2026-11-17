@@ -1,206 +1,80 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+
+.kartlar-baslik {
+    margin: 30px 0 15px 0;
+    color: #3b2314;
 }
 
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f7f3ed;
-}
+    .kartlar-baslik h3 {
+        font-size: 20px;
+        border-left: 4px solid #c89d55;
+        padding-left: 10px;
+    }
 
-/* ÜST BANT VE HERO (1. Kişi: İrem Azra Biçer) */
-
-/* Dil geçişi: onay kutusu gizli, işaretlenince İngilizce görünür */
-.dil-kutusu {
-    display: none;
-}
-
-.en {
-    display: none;
-}
-
-body:has(#dil-sec:checked) .tr {
-    display: none;
-}
-
-body:has(#dil-sec:checked) .en {
-    display: inline;
-}
-
-/* Üst bant */
-.ust-bant {
-    background-color: #3b2314;
-    color: #f4eee1;
+.kartlar {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    gap: 15px;
-    padding: 15px 30px;
-    border-bottom: 4px solid #c89d55;
-}
-
-.logo {
-    display: flex;
-    flex-direction: column;
-}
-
-.logo-baslik {
-    font-size: 24px;
-    font-weight: bold;
-    color: #dfb16b;
-    letter-spacing: 1px;
-}
-
-.logo-alt {
-    font-size: 13px;
-}
-
-.menu {
-    display: flex;
-    gap: 25px;
-}
-
-.menu a {
-    color: #f4eee1;
-    text-decoration: none;
-    font-size: 16px;
-}
-
-.menu a:hover {
-    color: #dfb16b;
-}
-
-.dil-dugme {
-    background-color: #c89d55;
-    color: #3b2314;
-    font-weight: bold;
-    padding: 8px 18px;
-    border-radius: 20px;
-    cursor: pointer;
-}
-
-.dil-dugme:hover {
-    background-color: #dfb16b;
-}
-
-/* Hero */
-.hero {
-    background-image: linear-gradient(rgba(59, 35, 20, 0.65), rgba(59, 35, 20, 0.65)),
-                      url("images/osmanli-bakir.jpeg");
-    background-size: cover;
-    background-position: center;
-    color: #f4eee1;
-    text-align: center;
-    padding: 100px 20px;
-    animation: hero-degis 20s infinite;   /* 4 fotoğraf x 5 saniye */
-}
-
-@keyframes hero-degis {
-    0%, 24.99% {
-        background-image: linear-gradient(rgba(59, 35, 20, 0.65), rgba(59, 35, 20, 0.65)),
-                          url("images/osmanli-bakir.jpeg");
-    }
-    25%, 49.99% {
-        background-image: linear-gradient(rgba(59, 35, 20, 0.65), rgba(59, 35, 20, 0.65)),
-                          url("images/osmanli-gravur.jpeg");
-    }
-    50%, 74.99% {
-        background-image: linear-gradient(rgba(59, 35, 20, 0.65), rgba(59, 35, 20, 0.65)),
-                          url("images/osmanli-radyo.jpeg");
-    }
-    75%, 100% {
-        background-image: linear-gradient(rgba(59, 35, 20, 0.65), rgba(59, 35, 20, 0.65)),
-                          url("images/osmanli-saat.jpeg");
-    }
-}
-
-.hero-icerik {
-    max-width: 700px;
-    margin: 0 auto;
-}
-
-.hero h1 {
-    font-size: 40px;
-    margin-bottom: 15px;
-}
-
-.hero p {
-    font-size: 18px;
-    margin-bottom: 25px;
-}
-
-.hero-dugme {
-    display: inline-block;
-    background-color: #c89d55;
-    color: #3b2314;
-    text-decoration: none;
-    font-weight: bold;
-    padding: 12px 28px;
-    border-radius: 6px;
-}
-
-.hero-dugme:hover {
-    background-color: #dfb16b;
-}
-
-/* Küçük ekranlar */
-@media (max-width: 600px) {
-    .ust-bant {
-        justify-content: center;
-        text-align: center;
-    }
-
-    .hero h1 {
-        font-size: 28px;
-    }
-}
-
-.site-footer {
-    background-color: #3b2314;
-    color: #f4eee1;
-    text-align: center;
-    padding: 30px 20px;
-    position: fixed; /* Sayfanın en dibine sabitler */
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    border-top: 4px solid #c89d55;
-    box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
-}
-
-.footer-content p {
-    font-size: 15px;
-    margin-bottom: 8px;
-    letter-spacing: 0.5px;
-}
-
-.footer-content p:last-child {
-    color: #dfb16b;
-    font-weight: bold;
-    font-size: 14px;
-    margin-bottom: 0;
-}
-/* KARTLAR BÖLÜMÜ (2. Kişi: Azragül Salgın) */
-.kartlar {
-    display: flex;          /* kartları yan yana dizer */
-    flex-wrap: wrap;        /* ekran daralınca alt satıra geçirir */
-    gap: 20px;              /* kartların arası boşluk */
-    padding: 20px 20px 120px 20px;  /* alttaki 120px, footer kartların üstünü kapatmasın diye */
+    gap: 20px;
+    padding: 0;
+    margin-bottom: 30px;
 }
 
 .kart {
-    flex: 1 1 220px;        /* en az 220px, kalan yeri paylaşır */
-    background-color: white;
+    flex: 1 1 220px;
+    background-color: #ffffff;
     border: 2px solid #c89d55;
     border-radius: 10px;
-    padding: 20px;
-    text-align: center;
-    color: #3b2314;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 3px 8px rgba(59, 35, 20, 0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.fiyat {
-    font-weight: bold;
-    color: #3b2314;
+    .kart:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 15px rgba(59, 35, 20, 0.14);
+    }
+
+.kart-gorsel {
+    width: 100%;
+    height: 140px;
+    background-color: #f7f3ed;
+    border-bottom: 1px solid #e2d5c1;
+    overflow: hidden;
 }
+
+    .kart-gorsel img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+    }
+
+.kart-bilgi {
+    padding: 15px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex: 1;
+}
+
+    .kart-bilgi h3 {
+        font-size: 16px;
+        color: #3b2314;
+        margin-bottom: 5px;
+    }
+
+    .kart-bilgi p {
+        font-size: 13px;
+        color: #6b5b4f;
+        margin-bottom: 10px;
+    }
+
+    .kart-bilgi .fiyat {
+        font-weight: bold;
+        color: #b5382a;
+        font-size: 15px;
+        margin-top: auto;
+    }

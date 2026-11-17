@@ -4,12 +4,338 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kozahan Antika - Antika ve Eski Eşya</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f7f3ed;
+        }
+
+        /* Dil Değişkenleri */
+        .dil-kutusu { display: none; }
+        .en { display: none; }
+        body:has(#dil-sec:checked) .tr { display: none; }
+        body:has(#dil-sec:checked) .en { display: inline; }
+
+        /* Üst Bant ve Hero */
+        .ust-bant {
+            background-color: #3b2314;
+            color: #f4eee1;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            padding: 15px 30px;
+            border-bottom: 4px solid #c89d55;
+        }
+
+        .logo { display: flex; flex-direction: column; }
+        .logo-baslik { font-size: 24px; font-weight: bold; color: #dfb16b; letter-spacing: 1px; }
+        .logo-alt { font-size: 13px; }
+
+        .menu { display: flex; gap: 25px; }
+        .menu a { color: #f4eee1; text-decoration: none; font-size: 16px; }
+        .menu a:hover { color: #dfb16b; }
+
+        .dil-dugme {
+            background-color: #c89d55;
+            color: #3b2314;
+            font-weight: bold;
+            padding: 8px 18px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+        .dil-dugme:hover { background-color: #dfb16b; }
+
+        .hero {
+            background-image: linear-gradient(rgba(59, 35, 20, 0.65), rgba(59, 35, 20, 0.65)), url("images/kozahan-avlu.jpg");
+            background-size: cover;
+            background-position: center;
+            color: #f4eee1;
+            text-align: center;
+            padding: 100px 20px;
+            animation: hero-degis 20s infinite;
+        }
+
+        @keyframes hero-degis {
+            0%, 24.99% { background-image: linear-gradient(rgba(59, 35, 20, 0.65), rgba(59, 35, 20, 0.65)), url("images/kozahan-avlu.jpg"); }
+            25%, 49.99% { background-image: linear-gradient(rgba(59, 35, 20, 0.65), rgba(59, 35, 20, 0.65)), url("images/osmanli-gravur.jpg"); }
+            50%, 74.99% { background-image: linear-gradient(rgba(59, 35, 20, 0.65), rgba(59, 35, 20, 0.65)), url("images/osmanli-radyo.jpg"); }
+            75%, 100% { background-image: linear-gradient(rgba(59, 35, 20, 0.65), rgba(59, 35, 20, 0.65)), url("images/osmanli-saat.jpg"); }
+        }
+
+        .hero-icerik { max-width: 700px; margin: 0 auto; }
+        .hero h1 { font-size: 40px; margin-bottom: 15px; }
+        .hero p { font-size: 18px; margin-bottom: 25px; }
+        .hero-dugme {
+            display: inline-block;
+            background-color: #c89d55;
+            color: #3b2314;
+            text-decoration: none;
+            font-weight: bold;
+            padding: 12px 28px;
+            border-radius: 6px;
+        }
+        .hero-dugme:hover { background-color: #dfb16b; }
+
+        /* Ana Konteyner ve Sidebar */
+        .ana-konteyner {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 0 20px;
+            display: flex;
+            gap: 30px;
+        }
+
+        .sidebar { flex: 0 0 280px; display: flex; flex-direction: column; gap: 20px; }
+        .sidebar-kutu {
+            background-color: #ffffff;
+            border: 1px solid #d8be92;
+            border-top: 4px solid #3b2314;
+            border-radius: 10px;
+            padding: 20px;
+            color: #3b2314;
+            box-shadow: 0 4px 12px rgba(59, 35, 20, 0.06);
+        }
+        .sidebar-kutu h3 {
+            font-size: 17px;
+            font-weight: 700;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee5d8;
+            color: #3b2314;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .sidebar-kutu h3::before { content: "❖"; color: #c89d55; font-size: 14px; }
+
+        .arama-kutusu { padding: 12px 15px; display: flex; align-items: center; background-color: #fdfbf7; }
+        .arama-kutusu input { width: 100%; border: none; background: transparent; font-size: 14px; color: #3b2314; outline: none; }
+        .arama-ikon { font-size: 15px; opacity: 0.7; }
+
+        .kategori-listesi { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+        .kategori-listesi li a {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 9px 12px;
+            border-radius: 6px;
+            color: #4a2e1b;
+            text-decoration: none;
+            font-size: 14.5px;
+            font-weight: 500;
+            border-left: 3px solid transparent;
+            transition: all 0.2s ease;
+        }
+        .kategori-listesi li a:hover { background-color: #f7f3ed; border-left-color: #c89d55; color: #2c1a0e; padding-left: 15px; }
+        .kategori-listesi li a.aktif { background-color: #f4ece0; border-left-color: #3b2314; color: #3b2314; font-weight: 700; }
+
+        .sayi-rozet {
+            background-color: #f4ece0;
+            color: #7a542e;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 2px 8px;
+            border-radius: 12px;
+            border: 1px solid #e0cba8;
+        }
+
+        .donem-etiketler { display: flex; flex-wrap: wrap; gap: 8px; }
+        .etiket {
+            display: inline-block;
+            padding: 6px 12px;
+            background-color: #f7f3ed;
+            border: 1px solid #d8be92;
+            border-radius: 20px;
+            color: #4a2e1b;
+            font-size: 13px;
+            text-decoration: none;
+        }
+        .etiket:hover { background-color: #3b2314; color: #dfb16b; border-color: #3b2314; }
+
+        .ekspertiz-kart {
+            background: linear-gradient(145deg, #3b2314, #28170d);
+            color: #f4eee1;
+            border: 2px solid #c89d55;
+            text-align: center;
+        }
+        .ekspertiz-kart h4 { color: #dfb16b; font-size: 16px; margin-bottom: 8px; }
+        .ekspertiz-kart p { font-size: 13px; line-height: 1.5; color: #e6dccb; margin-bottom: 14px; }
+        .ekspertiz-btn {
+            display: inline-block;
+            background-color: #c89d55;
+            color: #3b2314;
+            font-weight: bold;
+            font-size: 13px;
+            padding: 8px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+        }
+        .ekspertiz-btn:hover { background-color: #dfb16b; }
+
+        .ana-icerik { flex: 1; }
+        .baslik-alani { margin-bottom: 20px; color: #3b2314; }
+        .baslik-alani h2 { font-size: 26px; margin-bottom: 5px; }
+        .baslik-alani p { font-size: 15px; color: #6b5b4f; }
+
+        /* Müzayede ve Lotlar */
+        .muzayede-listesi { display: flex; flex-direction: column; gap: 20px; margin-bottom: 30px; }
+        .lot-kart {
+            display: flex;
+            background-color: #ffffff;
+            border: 2px solid #c89d55;
+            border-radius: 10px;
+            padding: 18px;
+            gap: 20px;
+            align-items: center;
+            box-shadow: 0 3px 8px rgba(59, 35, 20, 0.08);
+        }
+        .lot-gorsel {
+            flex: 0 0 240px;
+            height: 180px;
+            background-color: #f7f3ed;
+            border: 1px solid #e2d5c1;
+            border-radius: 8px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .lot-gorsel img { width: 100%; height: 100%; object-fit: cover; image-rendering: -webkit-optimize-contrast; }
+
+        .lot-bilgi { flex: 1; color: #3b2314; }
+        .lot-no { display: inline-block; color: #c89d55; font-weight: bold; font-size: 13px; margin-bottom: 4px; }
+        .lot-bilgi h3 { font-size: 17px; font-weight: bold; color: #2c1a0e; margin-bottom: 8px; }
+        .lot-aciklama { font-size: 12.5px; line-height: 1.5; color: #5c4b3e; margin-bottom: 12px; }
+        .lot-meta p { font-size: 13px; color: #3b2314; margin-bottom: 3px; }
+        .takip-link { display: inline-block; margin-top: 6px; font-size: 13px; color: #b5893e; text-decoration: none; font-weight: 600; }
+        .takip-link:hover { text-decoration: underline; color: #3b2314; }
+
+        .lot-fiyat-alani {
+            flex: 0 0 230px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            justify-content: space-between;
+            border-left: 1px solid #eee5d8;
+            padding-left: 18px;
+            gap: 10px;
+        }
+        .fiyat-satir { font-size: 14px; color: #5c4b3e; text-align: right; }
+        .fiyat-satir strong { font-size: 16px; color: #3b2314; }
+        .fiyat-satir .vurgulu-fiyat { font-size: 18px; color: #b5382a; }
+
+        .teklif-kutusu { display: flex; align-items: center; gap: 5px; margin-top: 10px; }
+        .artir-azalt {
+            width: 28px; height: 32px;
+            background-color: #3b2314; color: #f4eee1;
+            border: none; border-radius: 4px; font-size: 16px; font-weight: bold; cursor: pointer;
+        }
+        .artir-azalt:hover { background-color: #5a3721; }
+        .teklif-kutusu input {
+            width: 68px; height: 32px; text-align: center;
+            border: 1px solid #c89d55; border-radius: 4px; font-weight: bold; color: #3b2314; background-color: #fdfbf7;
+        }
+        .para-birimi { font-weight: bold; color: #3b2314; font-size: 14px; }
+        .teklif-btn {
+            background-color: #c89d55; color: #3b2314; border: none;
+            height: 32px; padding: 0 12px; border-radius: 4px; font-weight: bold; font-size: 13px; cursor: pointer;
+        }
+        .teklif-btn:hover { background-color: #dfb16b; }
+
+        /* Kartlar Vitrini Stilleri */
+        .kartlar-baslik { margin: 30px 0 15px 0; color: #3b2314; }
+        .kartlar-baslik h3 { font-size: 20px; border-left: 4px solid #c89d55; padding-left: 10px; }
+
+        .kartlar {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .kart {
+            background-color: #ffffff;
+            border: 2px solid #c89d55;
+            border-radius: 10px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            box-shadow: 0 3px 8px rgba(59, 35, 20, 0.06);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .kart:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(59, 35, 20, 0.14);
+        }
+        .kart-gorsel {
+            width: 100%;
+            height: 160px;
+            background-color: #f7f3ed;
+            border-bottom: 1px solid #e2d5c1;
+            overflow: hidden;
+        }
+        .kart-gorsel img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            image-rendering: -webkit-optimize-contrast;
+            image-rendering: crisp-edges;
+        }
+        .kart-bilgi {
+            padding: 15px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            flex: 1;
+        }
+        .kart-bilgi h3 { font-size: 16px; color: #3b2314; margin-bottom: 5px; }
+        .kart-bilgi p { font-size: 13px; color: #6b5b4f; margin-bottom: 10px; }
+        .kart-bilgi .fiyat { font-weight: bold; color: #b5382a; font-size: 15px; margin-top: auto; }
+
+        /* Biz Kimiz ve Footer */
+        .biz-kimiz {
+            background-color: #ffffff;
+            border: 2px solid #c89d55;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(59, 35, 20, 0.08);
+        }
+        .biz-kimiz-icerik h3 {
+            font-size: 22px; color: #3b2314; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #f7f3ed;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .biz-kimiz-icerik h3::before { content: "❖"; color: #c89d55; font-size: 18px; }
+        .biz-kimiz-icerik p { font-size: 15px; line-height: 1.7; color: #5c4b3e; }
+
+        .site-footer {
+            background-color: #3b2314; color: #f4eee1; text-align: center;
+            padding: 30px 20px; width: 100%; border-top: 4px solid #c89d55; margin-top: 50px;
+        }
+        .footer-content p { font-size: 15px; margin-bottom: 8px; }
+        .footer-content p:last-child { color: #dfb16b; font-weight: bold; font-size: 14px; margin-bottom: 0; }
+
+        @media (max-width: 900px) {
+            .ana-konteyner { flex-direction: column; }
+            .sidebar { width: 100%; }
+            .lot-kart { flex-direction: column; align-items: stretch; }
+            .lot-gorsel { width: 100%; height: 220px; }
+            .lot-fiyat-alani { width: 100%; border-left: none; border-top: 1px solid #eee5d8; padding-top: 12px; align-items: flex-start; }
+            .fiyat-satir { text-align: left; }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- 1. Kişi (İrem Azra Biçer): Üst Bant (Header) ve Hero -->
-  <input type="checkbox" id="dil-sec" class="dil-kutusu">
+    <!-- Üst Bant ve Hero -->
+    <input type="checkbox" id="dil-sec" class="dil-kutusu">
  
     <header class="ust-bant">
         <div class="logo">
@@ -26,8 +352,8 @@
                 <span class="en">Products</span>
             </a>
             <a href="#hakkimizda">
-                <span class="tr">Hakkımızda</span>
-                <span class="en">About</span>
+                <span class="tr">Biz Kimiz</span>
+                <span class="en">About Us</span>
             </a>
             <a href="#iletisim">
                 <span class="tr">İletişim</span>
@@ -58,39 +384,275 @@
         </div>
     </section>
 
-    <!-- 3. Kiş (Kağan Uslu): Ana İçerik ve Sidebar -->
+    <!-- Ana İçerik ve Sidebar -->
+    <div class="ana-konteyner" id="urunler">
+        
+        <aside class="sidebar">
+            <div class="sidebar-kutu arama-kutusu">
+                <input type="text" placeholder="Koleksiyonda ara... / Search...">
+                <span class="arama-ikon">🔍</span>
+            </div>
 
+            <div class="sidebar-kutu">
+                <h3>
+                    <span class="tr">Kategoriler</span>
+                    <span class="en">Categories</span>
+                </h3>
+                <ul class="kategori-listesi">
+                    <li>
+                        <a href="#" class="aktif">
+                            <span><span class="tr">Tümü</span><span class="en">All Items</span></span>
+                            <span class="sayi-rozet">18</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span><span class="tr">Bakır Eşyalar</span><span class="en">Copperware</span></span>
+                            <span class="sayi-rozet">5</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span><span class="tr">Saatler</span><span class="en">Clocks</span></span>
+                            <span class="sayi-rozet">3</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span><span class="tr">Gravürler & Tablolar</span><span class="en">Engravings</span></span>
+                            <span class="sayi-rozet">4</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span><span class="tr">Eski Radyolar</span><span class="en">Vintage Radios</span></span>
+                            <span class="sayi-rozet">2</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="#">
+                            <span><span class="tr">Osmanlı Silah & Tekstil</span><span class="en">Ottoman Arms & Textiles</span></span>
+                            <span class="sayi-rozet">4</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
 
-    <!-- 2. Kişi (Azragül Salgın): Kartlar / Ürün Kataloğu -->
- <section class="kartlar">
+            <div class="sidebar-kutu">
+                <h3>
+                    <span class="tr">Dönemler</span>
+                    <span class="en">Historical Eras</span>
+                </h3>
+                <div class="donem-etiketler">
+                    <a href="#" class="etiket"><span class="tr">Osmanlı Dönemi</span><span class="en">Ottoman Era</span></a>
+                    <a href="#" class="etiket"><span class="tr">18. Yüzyıl</span><span class="en">18th Century</span></a>
+                    <a href="#" class="etiket"><span class="tr">19. Yüzyıl</span><span class="en">19th Century</span></a>
+                    <a href="#" class="etiket"><span class="tr">20. Yüzyıl Başları</span><span class="en">Early 20th C.</span></a>
+                    <a href="#" class="etiket"><span class="tr">Cumhuriyet İlk Yıllar</span><span class="en">Early Republic</span></a>
+                </div>
+            </div>
 
-        <div class="kart">
-            <h3>Bakır Güğüm</h3>
-            <p>19. yy · Copper ewer, 19th c.</p>
-            <p class="fiyat">4.500 TL</p>
-        </div>
+            <div class="sidebar-kutu ekspertiz-kart">
+                <h4>
+                    <span class="tr">✦ Ücretsiz Ekspertiz</span>
+                    <span class="en">✦ Free Appraisal</span>
+                </h4>
+                <p>
+                    <span class="tr">Elinizdeki antika eserlerin değerini Koza Han'daki dükkanımızda uzman gözüyle ücretsiz öğrenin.</span>
+                    <span class="en">Discover the true value of your antiques for free at our Koza Han shop.</span>
+                </p>
+                <a href="#iletisim" class="ekspertiz-btn">
+                    <span class="tr">Bize Ulaşın</span>
+                    <span class="en">Contact Us</span>
+                </a>
+            </div>
+        </aside>
 
-        <div class="kart">
-            <h3>Duvar Saati</h3>
-            <p>1920'ler · Wall clock, 1920s</p>
-            <p class="fiyat">7.800 TL</p>
-        </div>
+        <main class="ana-icerik">
+            <div class="baslik-alani">
+                <h2>
+                    <span class="tr">Müzayede ve Koleksiyon Ürünlerimiz</span>
+                    <span class="en">Auction & Collection Items</span>
+                </h2>
+                <p>
+                    <span class="tr">Koza Han dükkanımızda sergilenen seçkin nostaljik parçalar ve aktif müzayede lotları.</span>
+                    <span class="en">Exquisite nostalgic pieces and active auction lots displayed in our Koza Han shop.</span>
+                </p>
+            </div>
 
-        <div class="kart">
-            <h3>Bursa Gravürü</h3>
-            <p>1880 · Bursa engraving, 1880</p>
-            <p class="fiyat">Fiyat sorunuz / Price on request</p>
-        </div>
+            <!-- Müzayede Lotları -->
+            <section class="muzayede-listesi">
+                <div class="lot-kart">
+                    <div class="lot-gorsel">
+                        <img src="images/akinci-kilici.jpg" alt="Osmanlı Dönemi Akıncı Kılıcı - Şimşir">
+                    </div>
+                    <div class="lot-bilgi">
+                        <span class="lot-no">Lot No: 8</span>
+                        <h3>
+                            <span class="tr">OSMANLI DÖNEMİ AKINCI KILICI - ŞİMŞİR</span>
+                            <span class="en">OTTOMAN ERA AKINCI SWORD - SHAMSHIR</span>
+                        </h3>
+                        <p class="lot-aciklama">
+                            <span class="tr">1800 BAŞLARI ORİJİNAL KININDA AHŞAP SAPLI VE SAPINDA REMİZ BULUNAN OSMANLI AKINCILARININ KULLANDIĞI NADİR AKINCI KILICI - ŞİMŞİR. UZUNLUK: 100 CM</span>
+                            <span class="en">EARLY 1800s RARE OTTOMAN AKINCI SWORD (SHAMSHIR) IN ORIGINAL SCABBARD WITH WOODEN HILT AND INSCRIPTION. LENGTH: 100 CM</span>
+                        </p>
+                        <div class="lot-meta">
+                            <p><strong><span class="tr">Müzayede Son Tarihi:</span><span class="en">Auction End Date:</span></strong> 22/11/2026 21:00</p>
+                            <p><strong><span class="tr">Toplam Teklif:</span><span class="en">Total Bids:</span></strong> 23</p>
+                            <p><strong><span class="tr">Takip Eden:</span><span class="en">Watchers:</span></strong> 23 <span class="tr">üye</span><span class="en">members</span></p>
+                            <a href="#" class="takip-link">
+                                <span class="tr">+ Takip Listeme Ekle</span>
+                                <span class="en">+ Add to Watchlist</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="lot-fiyat-alani">
+                        <div class="fiyat-satir">
+                            <span><span class="tr">Açılış Fiyatı :</span><span class="en">Starting Price :</span></span>
+                            <strong>1,000 ₺</strong>
+                        </div>
+                        <div class="fiyat-satir guncel">
+                            <span><span class="tr">Şuanki Fiyatı :</span><span class="en">Current Bid :</span></span>
+                            <strong class="vurgulu-fiyat">14,000 ₺</strong>
+                        </div>
+                        <div class="teklif-kutusu">
+                            <button type="button" class="artir-azalt">−</button>
+                            <input type="text" value="15000" readonly>
+                            <span class="para-birimi">₺</span>
+                            <button type="button" class="artir-azalt">+</button>
+                            <button type="button" class="teklif-btn">
+                                <span class="tr">Teklif Ver</span>
+                                <span class="en">Place Bid</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
 
-        <div class="kart">
-            <h3>Lambalı Radyo</h3>
-            <p>1950'ler · Valve radio, 1950s</p>
-            <p class="fiyat">3.200 TL</p>
-        </div>
+                <div class="lot-kart">
+                    <div class="lot-gorsel">
+                        <img src="images/hereke-seccade.jpg" alt="Osmanlı Dönemi Çok Nadir İpek Hereke Seccade">
+                    </div>
+                    <div class="lot-bilgi">
+                        <span class="lot-no">Lot No: 15</span>
+                        <h3>
+                            <span class="tr">OSMANLI DÖNEMİ ÇOK NADİR İPEK HEREKE SECCADE</span>
+                            <span class="en">OTTOMAN ERA VERY RARE SILK HEREKE PRAYER RUG</span>
+                        </h3>
+                        <p class="lot-aciklama">
+                            <span class="tr">ETRAFI AYETLERLE BEZELİ ALT VE ÜST KISMINDA MÜSENNA TEKNİĞİYLE KUFİ YAZILI BESMELE-İ ŞERİF YAZILMIŞ OSMANLI DÖNEMİ EL DOKUMA ÇOK NADİR İPEK HEREKE SECCADE. BOYUT: 96 X 57 CM</span>
+                            <span class="en">HANDWOVEN OTTOMAN SILK HEREKE PRAYER RUG ADORNED WITH VERSES AND KUFIC CALLIGRAPHY. SIZE: 96 X 57 CM</span>
+                        </p>
+                        <div class="lot-meta">
+                            <p><strong><span class="tr">Müzayede Son Tarihi:</span><span class="en">Auction End Date:</span></strong> 22/11/2026 21:00</p>
+                            <p><strong><span class="tr">Toplam Teklif:</span><span class="en">Total Bids:</span></strong> 15</p>
+                            <p><strong><span class="tr">Takip Eden:</span><span class="en">Watchers:</span></strong> 11 <span class="tr">üye</span><span class="en">members</span></p>
+                            <a href="#" class="takip-link">
+                                <span class="tr">+ Takip Listeme Ekle</span>
+                                <span class="en">+ Add to Watchlist</span>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="lot-fiyat-alani">
+                        <div class="fiyat-satir">
+                            <span><span class="tr">Açılış Fiyatı :</span><span class="en">Starting Price :</span></span>
+                            <strong>1,000 ₺</strong>
+                        </div>
+                        <div class="fiyat-satir guncel">
+                            <span><span class="tr">Şuanki Fiyatı :</span><span class="en">Current Bid :</span></span>
+                            <strong class="vurgulu-fiyat">9,000 ₺</strong>
+                        </div>
+                        <div class="teklif-kutusu">
+                            <button type="button" class="artir-azalt">−</button>
+                            <input type="text" value="9500" readonly>
+                            <span class="para-birimi">₺</span>
+                            <button type="button" class="artir-azalt">+</button>
+                            <button type="button" class="teklif-btn">
+                                <span class="tr">Teklif Ver</span>
+                                <span class="en">Place Bid</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
 
-    </section>
+            <!-- Kartlar Kataloğu Vitrini -->
+            <div class="kartlar-baslik">
+                <h3>
+                    <span class="tr">Seçkin Koleksiyon Parçaları</span>
+                    <span class="en">Exclusive Collection Pieces</span>
+                </h3>
+            </div>
 
-    <!-- 4. Kişi (Semanur Dellallar): Alt Bilgi (Footer) -->
+            <section class="kartlar">
+                <!-- Bakır Güğüm -->
+                <div class="kart">
+                    <div class="kart-gorsel">
+                        <img src="images/bursa-gugum.jpg" alt="Bakır Güğüm">
+                    </div>
+                    <div class="kart-bilgi">
+                        <h3>Bakır Güğüm</h3>
+                        <p>19. yy · Copper ewer, 19th c.</p>
+                        <p class="fiyat">4.500 TL</p>
+                    </div>
+                </div>
+
+                <!-- Duvar Saati -->
+                <div class="kart">
+                    <div class="kart-gorsel">
+                        <img src="images/duvar-saati.jpg" alt="Duvar Saati">
+                    </div>
+                    <div class="kart-bilgi">
+                        <h3>Duvar Saati</h3>
+                        <p>1920'ler · Wall clock, 1920s</p>
+                        <p class="fiyat">7.800 TL</p>
+                    </div>
+                </div>
+
+                <!-- Bursa Gravürü -->
+                <div class="kart">
+                    <div class="kart-gorsel">
+                        <img src="images/bursa-gravuru.jpg" alt="Bursa Gravürü">
+                    </div>
+                    <div class="kart-bilgi">
+                        <h3>Bursa Gravürü</h3>
+                        <p>1880 · Bursa engraving, 1880</p>
+                        <p class="fiyat">
+                            <span class="tr">Fiyat sorunuz</span>
+                            <span class="en">Price on request</span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Lambalı Radyo -->
+                <div class="kart">
+                    <div class="kart-gorsel">
+                        <img src="images/lambali-radyo.jpg" alt="Lambalı Radyo">
+                    </div>
+                    <div class="kart-bilgi">
+                        <h3>Lambalı Radyo</h3>
+                        <p>1950'ler · Valve radio, 1950s</p>
+                        <p class="fiyat">3.200 TL</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Biz Kimiz -->
+            <section class="biz-kimiz" id="hakkimizda">
+                <div class="biz-kimiz-icerik">
+                    <h3>
+                        <span class="tr">Biz Kimiz? — Tarihin Kalbinde Bir Yaşam Kültürü</span>
+                        <span class="en">Who We Are? — A Culture of Living in the Heart of History</span>
+                    </h3>
+                    <p>
+                        <span class="tr">Bursa'nın tarihi kalbi Koza Han'da otuz yılı aşkın süredir faaliyet gösteren Kozahan Antika; Osmanlı dönemine ait el işçiliği bakır eserlerden nadide saatlere, dönem gravürlerinden antika radyolara kadar geçmişin izlerini bugüne taşıyor. Ahmet Bulut öncülüğünde yürütülen koleksiyonculuk serüvenimiz, her bir eserin ruhunu koruyarak onları yeni sahipleriyle buluşturmayı amaçlar.</span>
+                        <span class="en">Operating for over thirty years in Koza Han, the historical heart of Bursa, Kozahan Antika carries the traces of the past into the present, ranging from handcrafted Ottoman copper works to rare clocks, period engravings, and vintage radios. Led by Ahmet Bulut, our collection journey aims to unite each artifact with its new owners while preserving its unique soul.</span>
+                    </p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Alt Bilgi -->
     <footer class="site-footer">
         <div class="footer-content">
             <p>© 2026 Kozahan Antika. Tüm hakları saklıdır.</p>
@@ -100,5 +662,3 @@
 
 </body>
 </html>
-
-
