@@ -11,8 +11,7 @@
     }
 
 .kartlar {
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
     gap: 20px;
     padding: 0;
     margin-bottom: 30px;
