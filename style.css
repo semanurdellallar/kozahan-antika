@@ -19,7 +19,6 @@
 }
 
 .kart {
-    flex: 1 1 220px;
     background-color: #ffffff;
     border: 2px solid #c89d55;
     border-radius: 10px;
